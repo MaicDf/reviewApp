@@ -1,5 +1,6 @@
 import tkinter as tk
 from subtemas import PantallaSubtemas
+
 class PantallaTemas(tk.Frame):
     def __init__(self, master, datos, guardar_datos):
         super().__init__(master)
@@ -21,40 +22,44 @@ class PantallaTemas(tk.Frame):
         self.scrollbar.config(command=self.canvas.yview)
 
         self.frame_contenido = tk.Frame(self.canvas)
-        self.canvas.create_window((0, 0), window=self.frame_contenido, anchor="nw")
+        self.canvas_window = self.canvas.create_window((0, 0), window=self.frame_contenido, anchor="nw")
 
-        # Crear botones de temas
         self.mostrar_temas()
 
-        # Botón "Añadir Tema"
         self.btn_anadir_tema = tk.Button(self, text="Añadir Tema", command=self.anadir_tema)
         self.btn_anadir_tema.pack()
 
         self.frame_contenido.bind("<Configure>", lambda e: self.canvas.config(scrollregion=self.canvas.bbox("all")))
+        self.canvas.bind("<Configure>", lambda e: self.canvas.itemconfig(
+            self.canvas_window, width=e.width
+        ))
 
     def mostrar_temas(self):
         for widget in self.frame_contenido.winfo_children():
             widget.destroy()
 
-        filas, columnas = 3, 4  # Configuración de 3 filas x 4 columnas
+        total_temas = len(self.datos["temas"])
+        filas = (total_temas // 4) + (1 if total_temas % 4 != 0 else 0)
+
         for index, tema in enumerate(self.datos["temas"]):
-            fila = index // columnas
-            columna = index % columnas
+            fila = index // 4
+            columna = index % 4
 
             btn_tema = tk.Button(self.frame_contenido, text=tema["nombre"], 
                                  bg=self.calcular_color(tema["subtemas"]), 
-                                 #command=lambda tema=tema: self.abrir_subtemas(tema)
-                                )
+                                 command=lambda tema=tema: self.abrir_subtemas(tema))
             btn_tema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
 
-        # Ajustar el peso de las columnas y filas para un diseño uniforme
         for i in range(filas):
-            self.frame_contenido.grid_rowconfigure(i, weight=2)
-        for j in range(columnas):
-            self.frame_contenido.grid_columnconfigure(j, weight=1)
+            self.frame_contenido.grid_rowconfigure(i, weight=1)
+        for j in range(4):
+            self.frame_contenido.grid_columnconfigure(j, weight=1, minsize=100)
+
+        self.frame_contenido.update_idletasks()
+        canvas_width = self.frame_contenido.winfo_reqwidth()
+        self.canvas.config(scrollregion=self.canvas.bbox("all"), width=canvas_width)
 
     def anadir_tema(self):
-        # Crear una ventana para ingresar el nombre del nuevo tema
         ventana_entrada = tk.Toplevel(self.master)
         ventana_entrada.title("Ingrese el nombre del nuevo tema")
 
@@ -66,10 +71,9 @@ class PantallaTemas(tk.Frame):
 
         def guardar_tema():
             nombre_tema = entry_nombre.get()
-            if nombre_tema.strip():  # Verificar si el nombre no está vacío
-                nuevo_tema = {"nombre": nombre_tema ,"subtemas": []}
+            if nombre_tema.strip():
+                nuevo_tema = {"nombre": nombre_tema, "subtemas": []}
                 self.datos["temas"].append(nuevo_tema)
-                print(self.datos)
                 self.guardar_datos(self.datos)
                 self.mostrar_temas()
             ventana_entrada.destroy()
@@ -83,18 +87,12 @@ class PantallaTemas(tk.Frame):
         app_subtemas.pack()
 
     def calcular_color(self, subtemas):
-        # Calcular color basado en los subtemas
         total = len(subtemas)
-        sumEstados = 0
-        for subtema in subtemas:
-            # Asumimos que "estado" está representado como un valor numérico.
-            sumEstados += float(subtema["estado"])
+        sumEstados = sum(float(subtema["estado"]) for subtema in subtemas)
+        proporcion_verde = sumEstados / total if total > 0 else 0
+        proporcion_rojo = 1 - proporcion_verde if total > 0 else 0
 
-        proporción_verde = sumEstados / total if total > 0 else 0
-        proporción_rojo = 1 - proporción_verde if total > 0 else 0
-
-        # Utilizar una escala de color de verde claro a rojo claro
-        color = self.lerp_color((144, 238, 144), (255, 182, 193), proporción_rojo)
+        color = self.lerp_color((144, 238, 144), (255, 182, 193), proporcion_rojo)
         return f"#{color[0]:02x}{color[1]:02x}{color[2]:02x}"
 
     def lerp_color(self, color1, color2, t):

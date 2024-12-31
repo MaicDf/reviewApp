@@ -12,14 +12,11 @@ def cargar_datos():
 
 # Guardar datos en el archivo JSON
 def guardar_datos(data):
-    print("I'm being called")
-    print(data)
     with open("playgroundFiles/dataTest.json", "w") as file:
         json.dump(data, file, indent=4)
 
 def main():
     datos = cargar_datos()
-    print(datos)
     root = tk.Tk() #creates the widonw
     root.title("Gestor de Temas")        
     app = PantallaTemas(root, datos, guardar_datos)

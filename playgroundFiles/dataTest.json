@@ -29,20 +29,42 @@
                             "fecha_repaso": "2023-12-15"
                         }
                     ]
+                },
+                {
+                    "nombre": "sad",
+                    "estado": 0.0
+                },
+                {
+                    "nombre": "asd",
+                    "estado": 0.0
+                }
+            ]
+        },
+        {
+            "nombre": "dsadsad",
+            "subtemas": [
+                {
+                    "nombre": "sadas",
+                    "estado": 0.0
+                },
+                {
+                    "nombre": "sadsadsa",
+                    "estado": 0.0
+                },
+                {
+                    "nombre": "a",
+                    "estado": 0.0
                 }
             ]
         },
         {
             "nombre": "x",
-            "subtemas": []
-        },
-        {
-            "nombre": "asdasdas",
-            "subtemas": []
-        },
-        {
-            "nombre": "asdsad",
-            "subtemas": []
+            "subtemas": [
+                {
+                    "nombre": "y",
+                    "estado": 0.0
+                }
+            ]
         }
     ]
 }
