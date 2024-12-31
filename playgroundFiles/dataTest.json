@@ -1,0 +1,48 @@
+{
+    "temas": [
+        {
+            "nombre": "Python",
+            "subtemas": [
+                {
+                    "nombre": "Sinstaxis",
+                    "estado": "0",
+                    "subsubtemas": [
+                        {
+                            "nombre": "Variables",
+                            "estado": "onTime",
+                            "fecha_repaso": null
+                        },
+                        {
+                            "nombre": "Condicionales",
+                            "estado": "dueSoon",
+                            "fecha_repaso": "2024-01-10"
+                        }
+                    ]
+                },
+                {
+                    "nombre": "Funciones",
+                    "estado": "0",
+                    "subsubtemas": [
+                        {
+                            "nombre": "Funciones b\u00c3\u00a1sicas",
+                            "estado": "overDue",
+                            "fecha_repaso": "2023-12-15"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nombre": "x",
+            "subtemas": []
+        },
+        {
+            "nombre": "asdasdas",
+            "subtemas": []
+        },
+        {
+            "nombre": "asdsad",
+            "subtemas": []
+        }
+    ]
+}

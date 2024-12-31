@@ -1,5 +1,5 @@
 import tkinter as tk
-from subsubtemas import PantallaSubsubtemas
+#from subsubtemas import PantallaSubsubtemas
 
 class PantallaSubtemas(tk.Frame):
     def __init__(self, master, tema, datos, guardar_datos):

@@ -1,6 +1,5 @@
 import tkinter as tk
 from subtemas import PantallaSubtemas
-
 class PantallaTemas(tk.Frame):
     def __init__(self, master, datos, guardar_datos):
         super().__init__(master)
@@ -11,7 +10,7 @@ class PantallaTemas(tk.Frame):
 
     def crear_widgets(self):
         self.temas_frame = tk.Frame(self)
-        self.temas_frame.pack()
+        self.temas_frame.pack(fill="both", expand=True)
 
         self.scrollbar = tk.Scrollbar(self.temas_frame, orient="vertical")
         self.scrollbar.pack(side="right", fill="y")
@@ -37,17 +36,46 @@ class PantallaTemas(tk.Frame):
         for widget in self.frame_contenido.winfo_children():
             widget.destroy()
 
-        for tema in self.datos["temas"]:
+        filas, columnas = 3, 4  # Configuración de 3 filas x 4 columnas
+        for index, tema in enumerate(self.datos["temas"]):
+            fila = index // columnas
+            columna = index % columnas
+
             btn_tema = tk.Button(self.frame_contenido, text=tema["nombre"], 
                                  bg=self.calcular_color(tema["subtemas"]), 
-                                 command=lambda tema=tema: self.abrir_subtemas(tema))
-            btn_tema.pack(fill="x")
+                                 #command=lambda tema=tema: self.abrir_subtemas(tema)
+                                )
+            btn_tema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
+
+        # Ajustar el peso de las columnas y filas para un diseño uniforme
+        for i in range(filas):
+            self.frame_contenido.grid_rowconfigure(i, weight=2)
+        for j in range(columnas):
+            self.frame_contenido.grid_columnconfigure(j, weight=1)
 
     def anadir_tema(self):
-        nuevo_tema = {"nombre": "Nuevo Tema", "subtemas": []}
-        self.datos["temas"].append(nuevo_tema)
-        self.guardar_datos(self.datos)
-        self.mostrar_temas()
+        # Crear una ventana para ingresar el nombre del nuevo tema
+        ventana_entrada = tk.Toplevel(self.master)
+        ventana_entrada.title("Ingrese el nombre del nuevo tema")
+
+        label = tk.Label(ventana_entrada, text="Nombre del Tema:")
+        label.pack(pady=10)
+
+        entry_nombre = tk.Entry(ventana_entrada)
+        entry_nombre.pack(pady=10)
+
+        def guardar_tema():
+            nombre_tema = entry_nombre.get()
+            if nombre_tema.strip():  # Verificar si el nombre no está vacío
+                nuevo_tema = {"nombre": nombre_tema ,"subtemas": []}
+                self.datos["temas"].append(nuevo_tema)
+                print(self.datos)
+                self.guardar_datos(self.datos)
+                self.mostrar_temas()
+            ventana_entrada.destroy()
+
+        btn_guardar = tk.Button(ventana_entrada, text="Guardar", command=guardar_tema)
+        btn_guardar.pack(pady=10)
 
     def abrir_subtemas(self, tema):
         ventana_subtemas = tk.Toplevel(self.master)
@@ -57,18 +85,16 @@ class PantallaTemas(tk.Frame):
     def calcular_color(self, subtemas):
         # Calcular color basado en los subtemas
         total = len(subtemas)
-        verde = rojo = 0
+        sumEstados = 0
         for subtema in subtemas:
-            if subtema["estado"] == "onTime":
-                verde += 1
-            elif subtema["estado"] == "overDue":
-                rojo += 1
+            # Asumimos que "estado" está representado como un valor numérico.
+            sumEstados += float(subtema["estado"])
 
-        proporción_verde = verde / total if total > 0 else 0
-        proporción_rojo = rojo / total if total > 0 else 0
+        proporción_verde = sumEstados / total if total > 0 else 0
+        proporción_rojo = 1 - proporción_verde if total > 0 else 0
 
-        # Utilizar una escala de color de verde a rojo
-        color = self.lerp_color((0, 255, 0), (255, 0, 0), proporción_rojo)
+        # Utilizar una escala de color de verde claro a rojo claro
+        color = self.lerp_color((144, 238, 144), (255, 182, 193), proporción_rojo)
         return f"#{color[0]:02x}{color[1]:02x}{color[2]:02x}"
 
     def lerp_color(self, color1, color2, t):

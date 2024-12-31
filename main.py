@@ -1,14 +1,29 @@
-# main.py
 import tkinter as tk
-from temas import manejar_temas
+from temas import PantallaTemas
+import json
 
-# Crear la ventana principal
-ventana = tk.Tk()
-ventana.title("Biblioteca de Repaso")
-ventana.geometry("530x400")  # Ancho x Alto
+# Cargar datos desde el archivo JSON
+def cargar_datos():
+    try:
+        with open("data.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {"temas": []}
 
-# Ejecutar la lógica de temas en la ventana principal
-manejar_temas(ventana)
+# Guardar datos en el archivo JSON
+def guardar_datos(data):
+    with open("data.json", "w") as file:
+        json.dump(data, file, indent=4)
 
-# Iniciar el bucle principal
-ventana.mainloop()
+def main():
+    datos = cargar_datos()
+
+    root = tk.Tk()
+    root.title("Gestor de Temas")
+    app = PantallaTemas(root, datos, guardar_datos)
+    app.pack()
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
