@@ -24,6 +24,7 @@ class PantallaTemas(tk.Frame):
         self.frame_contenido = tk.Frame(self.canvas)
         self.canvas_window = self.canvas.create_window((0, 0), window=self.frame_contenido, anchor="nw")
 
+        
         self.mostrar_temas()
 
         self.btn_anadir_tema = tk.Button(self, text="Añadir Tema", command=self.anadir_tema)
@@ -39,6 +40,8 @@ class PantallaTemas(tk.Frame):
             widget.destroy()
 
         total_temas = len(self.datos["temas"])
+        if(total_temas==0):
+            return 
         filas = (total_temas // 4) + (1 if total_temas % 4 != 0 else 0)
 
         for index, tema in enumerate(self.datos["temas"]):
@@ -72,7 +75,7 @@ class PantallaTemas(tk.Frame):
         def guardar_tema():
             nombre_tema = entry_nombre.get()
             if nombre_tema.strip():
-                nuevo_tema = {"nombre": nombre_tema, "subtemas": []}
+                nuevo_tema = {"id":len(self.datos["temas"]),"nombre": nombre_tema, "subtemas": []}
                 self.datos["temas"].append(nuevo_tema)
                 self.guardar_datos(self.datos)
                 self.mostrar_temas()

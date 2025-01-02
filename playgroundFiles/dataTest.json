@@ -1,68 +1,39 @@
 {
     "temas": [
         {
-            "nombre": "Python",
-            "subtemas": [
-                {
-                    "nombre": "Sinstaxis",
-                    "estado": "0",
-                    "subsubtemas": [
-                        {
-                            "nombre": "Variables",
-                            "estado": "onTime",
-                            "fecha_repaso": null
-                        },
-                        {
-                            "nombre": "Condicionales",
-                            "estado": "dueSoon",
-                            "fecha_repaso": "2024-01-10"
-                        }
-                    ]
-                },
-                {
-                    "nombre": "Funciones",
-                    "estado": "0",
-                    "subsubtemas": [
-                        {
-                            "nombre": "Funciones b\u00c3\u00a1sicas",
-                            "estado": "overDue",
-                            "fecha_repaso": "2023-12-15"
-                        }
-                    ]
-                },
-                {
-                    "nombre": "sad",
-                    "estado": 0.0
-                },
-                {
-                    "nombre": "asd",
-                    "estado": 0.0
-                }
-            ]
-        },
-        {
-            "nombre": "dsadsad",
-            "subtemas": [
-                {
-                    "nombre": "sadas",
-                    "estado": 0.0
-                },
-                {
-                    "nombre": "sadsadsa",
-                    "estado": 0.0
-                },
-                {
-                    "nombre": "a",
-                    "estado": 0.0
-                }
-            ]
-        },
-        {
+            "id": 0,
             "nombre": "x",
             "subtemas": [
                 {
-                    "nombre": "y",
-                    "estado": 0.0
+                    "id": 0,
+                    "nombre": "sadas'",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "xasd",
+                            "estado": 1
+                        },
+                        {
+                            "nombre": "asdsad",
+                            "estado": 1
+                        },
+                        {
+                            "nombre": "xx",
+                            "estado": 0.0
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "nombre": "xx",
+                    "estado": 0.0,
+                    "subsubtemas": []
+                },
+                {
+                    "id": 2,
+                    "nombre": "xx",
+                    "estado": 0.0,
+                    "subsubtemas": []
                 }
             ]
         }

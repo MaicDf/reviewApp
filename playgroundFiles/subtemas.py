@@ -91,8 +91,8 @@ class PantallaSubtemas(tk.Frame):
 
     def calcular_color(self, subtema):
         # Calculate color based on the subtopic's state
-        estado = float(subtema.get("estado", 0.0))
-        proporción_verde = estado
+        
+        estado = sum(float(subsubtema["estado"]) for subsubtema in subtema["subsubtemas"]) / len(subtema["subsubtemas"]) if subtema["subsubtemas"] else 0
         proporción_rojo = 1 - estado
 
         # Interpolate between green and red
@@ -119,7 +119,7 @@ class PantallaSubtemas(tk.Frame):
         def guardar_subtema():
             nombre_subtema = entry_nombre.get()
             if nombre_subtema.strip():
-                nuevo_subtema = {"nombre": nombre_subtema, "estado": 0.0}
+                nuevo_subtema = {"id":len(self.tema["subtemas"]), "nombre": nombre_subtema, "estado": 0.0,"subsubtemas":[]}
                 self.tema["subtemas"].append(nuevo_subtema)
                 self.guardar_datos(self.datos)
                 self.mostrar_subtemas()
@@ -132,7 +132,7 @@ class PantallaSubtemas(tk.Frame):
     def abrir_subsubtemas(self, subtema):
         """Abrir la pantalla de subsubtemas"""
         ventana_subsubtemas = tk.Toplevel(self.master)
-        app_subsubtemas = PantallaSubsubtemas(ventana_subsubtemas, subtema, self.datos, self.guardar_datos)
+        app_subsubtemas = PantallaSubsubtemas(ventana_subsubtemas, self.tema, subtema, self.datos, self.guardar_datos)
         app_subsubtemas.pack()
     
 

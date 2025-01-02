@@ -1,156 +1,191 @@
 import tkinter as tk
-import json
-from datetime import datetime, timedelta
+#from subsubsubtemas import PantallaSubsubsubtemas
 
 class PantallaSubsubtemas(tk.Frame):
-    def __init__(self, master, subtema, datos, guardar_datos):
+    def __init__(self, master, tema, subtema, datos, guardar_datos):
         super().__init__(master)
         self.master = master
         self.subtema = subtema
         self.datos = datos
         self.guardar_datos = guardar_datos
         self.crear_widgets()
-
+        self.subsubtemas_frame = tk.Frame(self, width=450)
+        self.subsubtemas_frame.pack(fill="both", expand=True)
+        self.tema=tema
+        
     def crear_widgets(self):
-        self.frame_subsubtemas = tk.Frame(self)
-        self.frame_subsubtemas.pack(fill="both", expand=True)
+        self.label_titulo = tk.Label(self, text=self.subtema["nombre"], font=("Arial", 16, "bold"))
+        self.label_titulo.pack(pady=10)
 
-        self.scrollbar = tk.Scrollbar(self.frame_subsubtemas, orient="vertical")
-        self.scrollbar.pack(side="right", fill="y")
+        self.subsubtemas_frame = tk.Frame(self)
+        self.subsubtemas_frame.pack(fill="both", expand=True)
 
-        self.canvas = tk.Canvas(self.frame_subsubtemas, yscrollcommand=self.scrollbar.set)
+        # Scrollbars for horizontal and vertical scrolling
+        self.scrollbar_y = tk.Scrollbar(self.subsubtemas_frame, orient="vertical")
+        self.scrollbar_y.pack(side="right", fill="y")
+
+        self.scrollbar_x = tk.Scrollbar(self.subsubtemas_frame, orient="horizontal")
+        self.scrollbar_x.pack(side="bottom", fill="x")
+
+        # Canvas for dynamic content
+        self.canvas = tk.Canvas(
+            self.subsubtemas_frame, 
+            yscrollcommand=self.scrollbar_y.set, 
+            xscrollcommand=self.scrollbar_x.set
+        )
         self.canvas.pack(side="left", fill="both", expand=True)
 
-        self.scrollbar.config(command=self.canvas.yview)
+        # Configure scrollbars
+        self.scrollbar_y.config(command=self.canvas.yview)
+        self.scrollbar_x.config(command=self.canvas.xview)
 
         self.frame_contenido = tk.Frame(self.canvas)
         self.canvas.create_window((0, 0), window=self.frame_contenido, anchor="nw")
 
-        # Crear botones de subsubtemas
+        # Display subsubtopics
         self.mostrar_subsubtemas()
 
+        # Buttons for actions
         self.btn_anadir_subsubtema = tk.Button(self, text="Añadir Subsubtema", command=self.anadir_subsubtema)
-        self.btn_anadir_subsubtema.pack()
+        self.btn_anadir_subsubtema.pack(pady=5)
 
-        self.frame_contenido.bind("<Configure>", lambda e: self.canvas.config(scrollregion=self.canvas.bbox("all")))
+        self.btn_editar_subtema = tk.Button(self, text="Editar Subtema", command=self.editar_subtema)
+        self.btn_editar_subtema.pack(pady=5)
+
+        self.btn_eliminar_subtema = tk.Button(self, text="Eliminar Subtema", command=self.eliminar_subtema)
+        self.btn_eliminar_subtema.pack(pady=5)
+
+        self.frame_contenido.bind("<Configure>", self.actualizar_scrollregion)
 
     def mostrar_subsubtemas(self):
+        # Clear previous widgets
         for widget in self.frame_contenido.winfo_children():
             widget.destroy()
 
-        for subsubtema in self.subtema["subsubtemas"]:
-            btn_subsubtema = tk.Button(self.frame_contenido, text=subsubtema["nombre"], 
-                                       bg=self.calcular_color(subsubtema),
-                                       command=lambda subsubtema=subsubtema: self.abrir_detalles(subsubtema))
-            btn_subsubtema.pack(fill="x", pady=5)
+        # Define grid layout
+        if(len(self.subtema["subsubtemas"]))==0:
+            return
+        filas, columnas = 3, 4
+        for index, subsubtema in enumerate(self.subtema["subsubtemas"]):
+            fila = index // columnas
+            columna = index % columnas
 
-    def anadir_subsubtema(self):
-        nuevo_subsubtema = {"nombre": "Nuevo Subsubtema", "estado": "onTime", "fecha_repaso": None}
-        self.subtema["subsubtemas"].append(nuevo_subsubtema)
-        self.guardar_datos(self.datos)
-        self.mostrar_subsubtemas()
+            # Create a button for each subsubtopic
+            btn_subsubtema = tk.Button(
+                self.frame_contenido,
+                text=subsubtema["nombre"],
+                bg=self.calcular_color(subsubtema),
+                command=lambda subsubtema=subsubtema: self.abrir_subsubsubtemas(subsubtema))
+            
+            btn_subsubtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
 
-    def abrir_detalles(self, subsubtema):
-        ventana_detalles = tk.Toplevel(self.master)
-        #app_detalles = PantallaDetalles(ventana_detalles, subsubtema, self.datos, self.guardar_datos)
-        #app_detalles.pack()
+        # Adjust row/column weights for uniform layout
+        for i in range(filas):
+            self.frame_contenido.grid_rowconfigure(i, weight=1)
+        for j in range(columnas):
+            self.frame_contenido.grid_columnconfigure(j, weight=1)
+
+        # Dynamically update the canvas size to prevent overflow
+        self.frame_contenido.update_idletasks()
+        self.canvas.config(scrollregion=self.canvas.bbox("all"))
+
+    def actualizar_scrollregion(self, event=None):
+        self.canvas.config(scrollregion=self.canvas.bbox("all"))
+
 
     def calcular_color(self, subsubtema):
-        """Calculates the color based on the review date."""
-        if subsubtema["fecha_repaso"]:
-            # Ensure fecha_repaso is a datetime.date object, if it's a string
-            if isinstance(subsubtema["fecha_repaso"], str):
-                subsubtema["fecha_repaso"] = datetime.strptime(subsubtema["fecha_repaso"], "%Y-%m-%d").date()
+        # Attempt to convert the "estado" value to a float. If it fails, default to 0.0.
+        try:
+            estado = float(subsubtema.get("estado", 0.0))
+        except ValueError:
+            # Handle invalid state values by defaulting to 0.0 (you can modify this as needed)
+            estado = 0.0
 
-            # Get today's date using datetime.today().date()
-            today = datetime.today().date()
+        proporción_verde = estado
+        proporción_rojo = 1 - estado
 
-            # Calculate the remaining days
-            dias_restantes = (subsubtema["fecha_repaso"] - today).days
+        # Interpolate between green and red using lerp_color
+        color = self.lerp_color((144, 238, 144), (255, 182, 193), proporción_rojo)
+        return f"#{color[0]:02x}{color[1]:02x}{color[2]:02x}"
 
-            # Determine color based on remaining days
-            if dias_restantes >= 10:
-                return "lightgreen"
-            elif dias_restantes >= 0:
-                return "lightyellow"
-            else:
-                return "lightcoral"
-        return "lightgreen"
+    def lerp_color(self, color1, color2, t):
+        """
+        Linearly interpolate between two colors.
+        color1, color2: tuples representing RGB values (0-255)
+        t: a float between 0 and 1 representing the interpolation factor
+        """
+        return (
+            int(color1[0] + (color2[0] - color1[0]) * t),
+            int(color1[1] + (color2[1] - color1[1]) * t),
+            int(color1[2] + (color2[2] - color1[2]) * t),
+        )
 
-# Función para cargar datos desde el archivo
-def cargar_datos():
-    try:
-        with open("data.json", "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        # Si el archivo no existe, devolvemos una estructura vacía
-        return {"temas": []}
+    def anadir_subsubtema(self):
+        ventana_entrada = tk.Toplevel(self.master)
+        ventana_entrada.title("Ingrese el nombre del nuevo subsubtema")
 
-# Función para guardar datos en el archivo
-def guardar_datos(datos):
-    with open("data.json", "w") as file:
-        json.dump(datos, file, indent=4)
+        label = tk.Label(ventana_entrada, text="Nombre del Subsubtema:")
+        label.pack(pady=10)
 
-# Función para cargar los subsubtemas de un tema y subtema específicos
-def cargar_subsubtemas(tema, subtema):
-    datos = cargar_datos()
-    for t in datos["temas"]:
-        if t["nombre"] == tema:
-            for st in t["subtemas"]:
-                if st["nombre"] == subtema:
-                    return st["subsubtemas"]
-    return []  # Si no se encuentra el subtema, retornamos una lista vacía
+        entry_nombre = tk.Entry(ventana_entrada)
+        entry_nombre.pack(pady=10)
 
-# Función para agregar un nuevo subsubtema
-def agregar_subsubtema(tema, subtema, nombre_subsubtema):
-    datos = cargar_datos()
-    for t in datos["temas"]:
-        if t["nombre"] == tema:
-            for st in t["subtemas"]:
-                if st["nombre"] == subtema:
-                    st["subsubtemas"].append({
-                        "nombre": nombre_subsubtema,
-                        "estado": "onTime",  # Estado inicial
-                        "fecha_repaso": None
-                    })
-                    break
-    guardar_datos(datos)  # Guardamos los cambios en el archivo
+        def guardar_subsubtema():
+            nombre_subsubtema = entry_nombre.get()
+            if nombre_subsubtema.strip():
+                nuevo_subsubtema = {"nombre": nombre_subsubtema, "estado": 0.0}
+                self.subtema["subsubtemas"].append(nuevo_subsubtema)
+                self.guardar_datos(self.datos)
+                self.mostrar_subsubtemas()
+            ventana_entrada.destroy()
 
-# Función para actualizar la fecha de repaso de un subsubtema
-def actualizar_fecha_repaso(tema, subtema, nombre_subsubtema, fecha_repaso):
-    datos = cargar_datos()
-    for t in datos["temas"]:
-        if t["nombre"] == tema:
-            for st in t["subtemas"]:
-                if st["nombre"] == subtema:
-                    for ss in st["subsubtemas"]:
-                        if ss["nombre"] == nombre_subsubtema:
-                            # Convertir fecha a datetime.date si es necesario
-                            if isinstance(fecha_repaso, str):
-                                fecha_repaso = datetime.strptime(fecha_repaso, "%Y-%m-%d").date()
-                            ss["fecha_repaso"] = fecha_repaso
-                            break
-    guardar_datos(datos)  # Guardamos los cambios en el archivo
+        btn_guardar = tk.Button(ventana_entrada, text="Guardar", command=guardar_subsubtema)
+        btn_guardar.pack(pady=10)
 
-# Función para calcular el estado de un subsubtema según la fecha de repaso
-def calcular_estado(fecha_repaso):
-    if not fecha_repaso:
-        return "onTime"  # Si no tiene fecha de repaso, se considera en tiempo
-    fecha_repaso = datetime.strptime(fecha_repaso, "%Y-%m-%d")
-    hoy = datetime.now()
-    diferencia = (fecha_repaso - hoy).days
-    if diferencia > 10:
-        return "onTime"
-    elif 0 <= diferencia <= 10:
-        return "dueSoon"
-    else:
-        return "overDue"
+    def abrir_subsubsubtemas(self, subsubtema):
+        """Abrir la pantalla de subsubsubtemas"""
+        ventana_subsubsubtemas = tk.Toplevel(self.master)
+        app_subsubsubtemas = PantallaSubsubsubtemas(ventana_subsubsubtemas, subsubtema, self.datos, self.guardar_datos)
+        app_subsubsubtemas.pack()
 
-# Función para calcular el color de fondo basado en el estado
-def calcular_color_fondo(estado):
-    if estado == "onTime":
-        return "#90EE90"  # Verde claro
-    elif estado == "dueSoon":
-        return "#FFFF99"  # Amarillo claro
-    elif estado == "overDue":
-        return "#FFCCCB"  # Rojo claro
+    def editar_subtema(self):
+        ventana_editar = tk.Toplevel(self.master)
+        ventana_editar.title("Editar Subtema")
+
+        label = tk.Label(ventana_editar, text="Nuevo Nombre del Subtema:")
+        label.pack(pady=10)
+
+        entry_nombre = tk.Entry(ventana_editar)
+        entry_nombre.insert(0, self.subtema["nombre"])
+        entry_nombre.pack(pady=10)
+
+        def guardar_cambios():
+            nuevo_nombre = entry_nombre.get()
+            if nuevo_nombre.strip():
+                self.subtema["nombre"] = nuevo_nombre
+                self.guardar_datos(self.datos)
+                self.label_titulo.config(text=nuevo_nombre)
+            ventana_editar.destroy()
+
+        btn_guardar = tk.Button(ventana_editar, text="Guardar", command=guardar_cambios)
+        btn_guardar.pack(pady=10)
+
+    def eliminar_subtema(self):
+        confirmacion = tk.Toplevel(self.master)
+        confirmacion.title("Confirmar Eliminación")
+
+        label = tk.Label(confirmacion, text=f"¿Está seguro de eliminar el subtema '{self.subtema['nombre']}'?")
+        label.pack(pady=10)
+
+        def confirmar_eliminacion():
+            print(self.datos["temas"][self.tema['id']])
+            self.datos["temas"][self.tema['id']]["subtemas"].remove(self.subtema)
+            self.guardar_datos(self.datos)
+            self.master.destroy()
+            confirmacion.destroy()
+
+        btn_confirmar = tk.Button(confirmacion, text="Sí, Eliminar", command=confirmar_eliminacion)
+        btn_confirmar.pack(side="left", padx=10, pady=10)
+
+        btn_cancelar = tk.Button(confirmacion, text="Cancelar", command=confirmacion.destroy)
+        btn_cancelar.pack(side="right", padx=10, pady=10)
