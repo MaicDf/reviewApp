@@ -61,6 +61,7 @@ class PantallaTemas(tk.Frame):
         self.frame_contenido.update_idletasks()
         canvas_width = self.frame_contenido.winfo_reqwidth()
         self.canvas.config(scrollregion=self.canvas.bbox("all"), width=canvas_width)
+        self.guardar_datos(self.datos)
 
     def anadir_tema(self):
         ventana_entrada = tk.Toplevel(self.master)

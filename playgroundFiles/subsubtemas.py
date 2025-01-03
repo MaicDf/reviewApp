@@ -1,5 +1,7 @@
 import tkinter as tk
-#from subsubsubtemas import PantallaSubsubsubtemas
+from datetime import datetime
+
+from detalles import PantallaDetalles
 
 class PantallaSubsubtemas(tk.Frame):
     def __init__(self, master, tema, subtema, datos, guardar_datos):
@@ -78,7 +80,7 @@ class PantallaSubsubtemas(tk.Frame):
                 command=lambda subsubtema=subsubtema: self.abrir_subsubsubtemas(subsubtema))
             
             btn_subsubtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
-
+            self.guardar_datos(self.datos)
         # Adjust row/column weights for uniform layout
         for i in range(filas):
             self.frame_contenido.grid_rowconfigure(i, weight=1)
@@ -94,14 +96,16 @@ class PantallaSubsubtemas(tk.Frame):
 
 
     def calcular_color(self, subsubtema):
-        # Attempt to convert the "estado" value to a float. If it fails, default to 0.0.
-        try:
-            estado = float(subsubtema.get("estado", 0.0))
-        except ValueError:
-            # Handle invalid state values by defaulting to 0.0 (you can modify this as needed)
-            estado = 0.0
-
-        proporción_verde = estado
+        deadline=datetime.strptime(subsubtema["deadline"], '%Y-%m-%d')
+        delta=abs((deadline-datetime.today()).days)
+        estado=0.0  
+        print(delta)
+        if(delta>=30):
+            estado=1.0
+        else:
+            estado=delta/30
+        subsubtema["estado"]=estado
+        print(estado)
         proporción_rojo = 1 - estado
 
         # Interpolate between green and red using lerp_color
@@ -133,7 +137,7 @@ class PantallaSubsubtemas(tk.Frame):
         def guardar_subsubtema():
             nombre_subsubtema = entry_nombre.get()
             if nombre_subsubtema.strip():
-                nuevo_subsubtema = {"nombre": nombre_subsubtema, "estado": 0.0}
+                nuevo_subsubtema = {"nombre": nombre_subsubtema, "estado": 0.0,"deadline": datetime.today().strftime('%Y-%m-%d')}
                 self.subtema["subsubtemas"].append(nuevo_subsubtema)
                 self.guardar_datos(self.datos)
                 self.mostrar_subsubtemas()
@@ -145,7 +149,7 @@ class PantallaSubsubtemas(tk.Frame):
     def abrir_subsubsubtemas(self, subsubtema):
         """Abrir la pantalla de subsubsubtemas"""
         ventana_subsubsubtemas = tk.Toplevel(self.master)
-        app_subsubsubtemas = PantallaSubsubsubtemas(ventana_subsubsubtemas, subsubtema, self.datos, self.guardar_datos)
+        app_subsubsubtemas = PantallaDetalles(ventana_subsubsubtemas, subsubtema, self.datos, self.guardar_datos)
         app_subsubsubtemas.pack()
 
     def editar_subtema(self):

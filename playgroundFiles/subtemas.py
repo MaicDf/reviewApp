@@ -75,7 +75,8 @@ class PantallaSubtemas(tk.Frame):
                 command=lambda subtema=subtema: self.abrir_subsubtemas(subtema))
             
             btn_subtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
-
+            print(self.datos)
+            self.guardar_datos(self.datos)
         # Adjust row/column weights for uniform layout
         for i in range(filas):
             self.frame_contenido.grid_rowconfigure(i, weight=1)
@@ -93,8 +94,9 @@ class PantallaSubtemas(tk.Frame):
         # Calculate color based on the subtopic's state
         
         estado = sum(float(subsubtema["estado"]) for subsubtema in subtema["subsubtemas"]) / len(subtema["subsubtemas"]) if subtema["subsubtemas"] else 0
+        subtema["estado"] = estado #for updating
+        print("subtema\n",subtema)
         proporción_rojo = 1 - estado
-
         # Interpolate between green and red
         color = self.lerp_color((144, 238, 144), (255, 182, 193), proporción_rojo)
         return f"#{color[0]:02x}{color[1]:02x}{color[2]:02x}"

@@ -1,41 +1,37 @@
 {
-    "temas": [
+  "temas": [
+    {
+      "id": 0,
+      "nombre": "y",
+      "subtemas": [
         {
-            "id": 0,
-            "nombre": "x",
-            "subtemas": [
-                {
-                    "id": 0,
-                    "nombre": "sadas'",
-                    "estado": 0.0,
-                    "subsubtemas": [
-                        {
-                            "nombre": "xasd",
-                            "estado": 1
-                        },
-                        {
-                            "nombre": "asdsad",
-                            "estado": 1
-                        },
-                        {
-                            "nombre": "xx",
-                            "estado": 0.0
-                        }
-                    ]
-                },
-                {
-                    "id": 1,
-                    "nombre": "xx",
-                    "estado": 0.0,
-                    "subsubtemas": []
-                },
-                {
-                    "id": 2,
-                    "nombre": "xx",
-                    "estado": 0.0,
-                    "subsubtemas": []
-                }
-            ]
+          "id": 0,
+          "nombre": "z",
+          "estado": 0.03333333333333333,
+          "subsubtemas": [
+            {
+              "nombre": "r",
+              "estado": 0.03333333333333333,
+              "deadline": "2025-01-02"
+            },
+            {
+              "nombre": "x",
+              "estado": 0.03333333333333333,
+              "deadline": "2025-01-02"
+            },
+            {
+              "nombre": "z",
+              "estado": 0.03333333333333333,
+              "deadline": "2025-01-02"
+            },
+            {
+              "nombre": "x",
+              "estado": 0.03333333333333333,
+              "deadline": "2025-01-02"
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }
