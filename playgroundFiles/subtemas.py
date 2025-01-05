@@ -1,5 +1,6 @@
 import tkinter as tk
 from subsubtemas import PantallaSubsubtemas
+from utils import update_estados
 
 class PantallaSubtemas(tk.Frame):
     def __init__(self, master, tema, datos, guardar_datos):
@@ -8,11 +9,16 @@ class PantallaSubtemas(tk.Frame):
         self.tema = tema
         self.datos = datos
         self.guardar_datos = guardar_datos
+        self.master.bind("<FocusIn>", lambda event: self.actualizarVista())        
+        
         self.crear_widgets()
         self.temas_frame = tk.Frame(self, width=450)
         self.temas_frame.pack(fill="both", expand=True)
         
     def crear_widgets(self):
+        update_estados(self.datos,self.guardar_datos)
+
+
         self.label_titulo = tk.Label(self, text=self.tema["nombre"], font=("Arial", 16, "bold"))
         self.label_titulo.pack(pady=10)
 
@@ -75,7 +81,6 @@ class PantallaSubtemas(tk.Frame):
                 command=lambda subtema=subtema: self.abrir_subsubtemas(subtema))
             
             btn_subtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
-            print(self.datos)
             self.guardar_datos(self.datos)
         # Adjust row/column weights for uniform layout
         for i in range(filas):
@@ -178,3 +183,11 @@ class PantallaSubtemas(tk.Frame):
 
         btn_cancelar = tk.Button(confirmacion, text="Cancelar", command=confirmacion.destroy)
         btn_cancelar.pack(side="right", padx=10, pady=10)
+
+    def actualizarVista(self):
+        update_estados(self.datos,self.guardar_datos)
+        self.master.tittle("hola")
+        if self.frame_contenido:
+            self.mostrar_subtemas()
+        else:
+            print("frame_contenido no está inicializado todavía.")

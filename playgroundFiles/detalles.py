@@ -1,48 +1,134 @@
 import tkinter as tk
+from tkinter import simpledialog, messagebox
+from tkinter.scrolledtext import ScrolledText
 from datetime import timedelta, date
 
 class PantallaDetalles(tk.Frame):
-    def __init__(self, master, subsubtema, datos, guardar_datos):
+    def __init__(self, master, tema, subtema,subsubtema, datos, guardar_datos):
         super().__init__(master)
         self.master = master
         self.subsubtema = subsubtema
         self.datos = datos
         self.guardar_datos = guardar_datos
+        self.tema=tema
+        self.subtema=subtema
+
+        self.master.geometry("700x700")
         self.crear_widgets()
 
     def crear_widgets(self):
-        self.atomic_task_label = tk.Label(self, text="Atomic Task")
-        self.atomic_task_label.pack()
+        # Title
+        title_label = tk.Label(self, text=self.subsubtema["nombre"], font=("Arial", 20), anchor="center")
+        title_label.pack(pady=10)
 
-        self.atomic_task_entry = tk.Entry(self)
-        self.atomic_task_entry.pack()
+        # Atomic Task Label and Edit Icon
+        atomic_task_frame = tk.Frame(self)
+        atomic_task_frame.pack(anchor="w", fill="x", padx=10, pady=5)
 
-        self.concept_label = tk.Label(self, text="Concept, Active Recall")
-        self.concept_label.pack()
+        edit_atomic_task_button = tk.Button(atomic_task_frame, text="🖉", command=self.editar_atomic_task)
+        edit_atomic_task_button.pack(side="left", padx=5)
 
-        self.concept_entry = tk.Entry(self)
-        self.concept_entry.pack()
+        self.atomic_task_label = tk.Label(atomic_task_frame, text="Atomic Task: " + self.subsubtema.get("atomic_task", ""))
+        self.atomic_task_label.pack(side="left")
 
-        self.show_button = tk.Button(self, text="Show", command=self.mostrar_conceptos)
-        self.show_button.pack()
+        # Concept/Active Recall Text Area and Edit Icon
+        concept_frame = tk.Frame(self)
+        concept_frame.pack(anchor="w", fill="x", padx=10, pady=5)
 
+        edit_concept_button = tk.Button(concept_frame, text="🖉", command=self.editar_concept)
+        edit_concept_button.pack(side="left", padx=5)
+
+        concept_label = tk.Label(concept_frame, text="Concept/Hint (Active Recall):")
+        concept_label.pack(side="left")
+         
+        self.concept_text = ScrolledText(self, wrap=tk.WORD, height=10, state="disabled", bg="white" if self.subsubtema["concept"]=="" else "black")
+        self.concept_text.pack(fill="both", expand=True, padx=10, pady=5)
+
+        # Insert concept text
+        concept_content = self.subsubtema["concept"]
+
+        self.concept_text.config(state="normal")
+        self.concept_text.delete("1.0", tk.END)
+        self.concept_text.insert("1.0", concept_content)
+        self.concept_text.config(state="disabled")
+
+        # Show Button
+        self.show_button = tk.Button(self, text="Show", command=self.mostrar_concepto)
+        self.show_button.pack(pady=5)
+
+        # Done Buttons
         self.done_button = tk.Button(self, text="Done (Default)", command=self.configurar_repaso_default)
-        self.done_button.pack()
+        self.done_button.pack(pady=5)
 
         self.done_custom_button = tk.Button(self, text="Done (Custom)", command=self.configurar_repaso_custom)
-        self.done_custom_button.pack()
+        self.done_custom_button.pack(pady=5)
 
-    def mostrar_conceptos(self):
-        self.concept_entry.config(state="normal")
+        # Save Button
+        save_button = tk.Button(self, text="Save", command=self.save_fields, bg="green", fg="white")
+        save_button.pack(pady=10)
+
+        # Delete Button
+        delete_button = tk.Button(self, text="Delete", command=self.eliminar_subsubtema, bg="red", fg="white")
+        delete_button.pack(pady=10)
+
+    def editar_atomic_task(self):
+        nuevo_valor = simpledialog.askstring("Edit Atomic Task", "Enter new atomic task:")
+        if nuevo_valor:
+            self.subsubtema["atomic_task"] = nuevo_valor
+            self.atomic_task_label.config(text="Atomic Task: " + nuevo_valor)
+
+    def editar_concept(self):
+        self.concept_text.config(state="normal", bg="white")
+        self.concept_text.focus_set()
+
+    def mostrar_concepto(self):
+        self.concept_text.config(state="normal", bg="white")
 
     def configurar_repaso_default(self):
-        self.subsubtema["fecha_repaso"] = date.today() + timedelta(days=30)
+        self.subsubtema["deadline"] = (date.today() + timedelta(days=30)).strftime('%Y-%m-%d')
         self.guardar_datos(self.datos)
+        self.master.destroy()
 
     def configurar_repaso_custom(self):
-        dias = int(self.ask_custom_days())
-        self.subsubtema["fecha_repaso"] = date.today() + timedelta(days=dias)
-        self.guardar_datos(self.datos)
+        dias = simpledialog.askinteger("Custom Days", "Enter the number of days:")
+        if dias is not None:
+            self.subsubtema["deadline"] = (date.today() + timedelta(days=dias)).strftime('%Y-%m-%d')
+            self.guardar_datos(self.datos)
+        self.master.destroy()
 
-    def ask_custom_days(self):
-        return tk.simpledialog.askstring("Custom Days", "Enter the number of days:")
+
+    def save_fields(self):
+        # Save atomic task and concept
+        self.subsubtema["concept"] = self.concept_text.get("1.0", "end-1c").strip()
+        self.guardar_datos(self.datos)
+        messagebox.showinfo("Save Successful", "The changes have been saved successfully!")
+        self.master.destroy()
+
+    def editar_subtema(self):
+        ventana_editar = tk.Toplevel(self.master)
+        ventana_editar.title("Editar Subsubtema")
+
+        label = tk.Label(ventana_editar, text="Nuevo Nombre del Subsubtema:")
+        label.pack(pady=10)
+
+        entry_nombre = tk.Entry(ventana_editar)
+        entry_nombre.insert(0, self.subsubtema["nombre"])
+        entry_nombre.pack(pady=10)
+
+        def guardar_cambios():
+            nuevo_nombre = entry_nombre.get()
+            if nuevo_nombre.strip():
+                self.subsubtema["nombre"] = nuevo_nombre
+                self.guardar_datos(self.datos)
+                self.label_titulo.config(text=nuevo_nombre)
+            ventana_editar.destroy()
+
+        btn_guardar = tk.Button(ventana_editar, text="Guardar", command=guardar_cambios)
+        btn_guardar.pack(pady=10)
+        
+    def eliminar_subsubtema(self):
+        confirm = messagebox.askyesno("Delete Subsubtema", "Are you sure you want to delete this subsubtema?")
+        if confirm:
+            self.datos["temas"][self.tema['id']]["subtemas"][self.subtema['id']]['subsubtemas'].remove(self.subsubtema)
+            self.guardar_datos(self.datos)
+            self.master.destroy()

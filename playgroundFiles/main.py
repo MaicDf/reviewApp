@@ -2,6 +2,7 @@ import tkinter as tk
 from temas import PantallaTemas
 import json
 
+
 #print(datos['temas'][0]['subtemas']): this way we can access to the data
 def cargar_datos():
     try:
@@ -25,3 +26,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

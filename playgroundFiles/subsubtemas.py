@@ -1,5 +1,6 @@
 import tkinter as tk
 from datetime import datetime
+from utils import update_estados
 
 from detalles import PantallaDetalles
 
@@ -10,12 +11,16 @@ class PantallaSubsubtemas(tk.Frame):
         self.subtema = subtema
         self.datos = datos
         self.guardar_datos = guardar_datos
+        self.master.bind("<FocusIn>", lambda event: self.actualizarVista())        
+        
         self.crear_widgets()
         self.subsubtemas_frame = tk.Frame(self, width=450)
         self.subsubtemas_frame.pack(fill="both", expand=True)
         self.tema=tema
         
     def crear_widgets(self):
+        update_estados(self.datos,self.guardar_datos)
+        
         self.label_titulo = tk.Label(self, text=self.subtema["nombre"], font=("Arial", 16, "bold"))
         self.label_titulo.pack(pady=10)
 
@@ -137,7 +142,7 @@ class PantallaSubsubtemas(tk.Frame):
         def guardar_subsubtema():
             nombre_subsubtema = entry_nombre.get()
             if nombre_subsubtema.strip():
-                nuevo_subsubtema = {"nombre": nombre_subsubtema, "estado": 0.0,"deadline": datetime.today().strftime('%Y-%m-%d')}
+                nuevo_subsubtema = {"nombre": nombre_subsubtema,"concept":"","atomic_task":"", "estado": 0.0,"deadline": datetime.today().strftime('%Y-%m-%d')}
                 self.subtema["subsubtemas"].append(nuevo_subsubtema)
                 self.guardar_datos(self.datos)
                 self.mostrar_subsubtemas()
@@ -149,7 +154,7 @@ class PantallaSubsubtemas(tk.Frame):
     def abrir_subsubsubtemas(self, subsubtema):
         """Abrir la pantalla de subsubsubtemas"""
         ventana_subsubsubtemas = tk.Toplevel(self.master)
-        app_subsubsubtemas = PantallaDetalles(ventana_subsubsubtemas, subsubtema, self.datos, self.guardar_datos)
+        app_subsubsubtemas = PantallaDetalles(ventana_subsubsubtemas,self.tema, self.subtema,subsubtema, self.datos, self.guardar_datos)
         app_subsubsubtemas.pack()
 
     def editar_subtema(self):
@@ -182,7 +187,6 @@ class PantallaSubsubtemas(tk.Frame):
         label.pack(pady=10)
 
         def confirmar_eliminacion():
-            print(self.datos["temas"][self.tema['id']])
             self.datos["temas"][self.tema['id']]["subtemas"].remove(self.subtema)
             self.guardar_datos(self.datos)
             self.master.destroy()
@@ -193,3 +197,11 @@ class PantallaSubsubtemas(tk.Frame):
 
         btn_cancelar = tk.Button(confirmacion, text="Cancelar", command=confirmacion.destroy)
         btn_cancelar.pack(side="right", padx=10, pady=10)
+
+    def actualizarVista(self):
+        update_estados(self.datos,self.guardar_datos)
+        if self.frame_contenido:
+            self.mostrar_subsubtemas()
+        else:
+            print("frame_contenido no está inicializado todavía.")
+            

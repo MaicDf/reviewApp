@@ -1,5 +1,6 @@
 import tkinter as tk
 from subtemas import PantallaSubtemas
+from utils import update_estados
 
 class PantallaTemas(tk.Frame):
     def __init__(self, master, datos, guardar_datos):
@@ -7,9 +8,17 @@ class PantallaTemas(tk.Frame):
         self.master = master
         self.datos = datos
         self.guardar_datos = guardar_datos
+        # Bind <FocusIn> to self.actualizarVista using a lambda to call it when the event occurs
+        self.master.bind("<FocusIn>", lambda event: self.actualizarVista())        
         self.crear_widgets()
+        
 
     def crear_widgets(self):
+        #this is supposed to update the view each time is focused on
+        update_estados(self.datos,self.guardar_datos)
+        # Set window title
+        self.master.title("Temas - (" + str(len(self.datos["temas"])) + ")")
+
         self.temas_frame = tk.Frame(self)
         self.temas_frame.pack(fill="both", expand=True)
 
@@ -29,6 +38,10 @@ class PantallaTemas(tk.Frame):
 
         self.btn_anadir_tema = tk.Button(self, text="Añadir Tema", command=self.anadir_tema)
         self.btn_anadir_tema.pack()
+        
+        self.btn_anadir_tema = tk.Button(self, text="Actualizar", command=self.mostrar_temas)
+        self.btn_anadir_tema.pack()
+
 
         self.frame_contenido.bind("<Configure>", lambda e: self.canvas.config(scrollregion=self.canvas.bbox("all")))
         self.canvas.bind("<Configure>", lambda e: self.canvas.itemconfig(
@@ -105,3 +118,12 @@ class PantallaTemas(tk.Frame):
             int(color1[1] + (color2[1] - color1[1]) * t),
             int(color1[2] + (color2[2] - color1[2]) * t),
         )
+
+
+    def actualizarVista(self):
+        update_estados(self.datos,self.guardar_datos)
+        if self.frame_contenido:
+            self.mostrar_temas()
+        else:
+            print("frame_contenido no está inicializado todavía.")
+            
