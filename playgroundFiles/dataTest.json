@@ -2,15 +2,64 @@
     "temas": [
         {
             "id": 0,
-            "nombre": "PYTHON",
+            "nombre": "1. PYTHON",
             "subtemas": [
                 {
-                    "id": 0,
-                    "nombre": "Building blocks",
+                    "id": 1,
+                    "nombre": "1. Additional functionalities",
                     "estado": 0.0,
                     "subsubtemas": [
                         {
-                            "nombre": "IF",
+                            "nombre": "4 : DICTIONARY",
+                            "concept": "",
+                            "atomic_task": "sdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasd",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "2. Kargs",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "3.TDD ",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "Write and Read files",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        }
+                    ]
+                },
+                {
+                    "id": 0,
+                    "nombre": "1. Building blocks",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "class",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "dictionaries",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "Exceptions",
                             "concept": "",
                             "atomic_task": "",
                             "estado": 0.0,
@@ -31,21 +80,7 @@
                             "deadline": "2025-01-05"
                         },
                         {
-                            "nombre": "class",
-                            "concept": "",
-                            "atomic_task": "",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        },
-                        {
-                            "nombre": "lists",
-                            "concept": "",
-                            "atomic_task": "",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        },
-                        {
-                            "nombre": "dictionaries",
+                            "nombre": "IF",
                             "concept": "",
                             "atomic_task": "",
                             "estado": 0.0,
@@ -59,50 +94,27 @@
                             "deadline": "2025-01-05"
                         },
                         {
-                            "nombre": "Exceptions",
+                            "nombre": "lists",
                             "concept": "",
                             "atomic_task": "",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        }
-                    ]
-                },
-                {
-                    "id": 1,
-                    "nombre": "Additional functionalities",
-                    "estado": 0.0,
-                    "subsubtemas": [
-                        {
-                            "nombre": "TDD ",
-                            "concept": "",
-                            "atomic_task": "",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        },
-                        {
-                            "nombre": "Kargs",
-                            "concept": "",
-                            "atomic_task": "",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        },
-                        {
-                            "nombre": "Write and Read files",
-                            "concept": "",
-                            "atomic_task": "",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        },
-                        {
-                            "nombre": "T  : DICTIONARY",
-                            "concept": "",
-                            "atomic_task": "sdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasd",
                             "estado": 0.0,
                             "deadline": "2025-01-05"
                         }
                     ]
                 }
             ],
+            "estado": 0.0
+        },
+        {
+            "id": 2,
+            "nombre": "2. DJango",
+            "subtemas": [],
+            "estado": 0.0
+        },
+        {
+            "id": 1,
+            "nombre": "3. React",
+            "subtemas": [],
             "estado": 0.0
         }
     ]

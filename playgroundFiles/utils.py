@@ -17,7 +17,7 @@ def update_estados(datos,guardar_datos):
                     estado = 0.0
                 
                 subsubtema["estado"] = estado
-                print(f"Subsubtema estado: {estado}")
+                #print(f"Subsubtema estado: {estado}")
 
             # Update the estado of subtema
             total_subsubtemas = len(subtema["subsubtemas"])
@@ -25,7 +25,7 @@ def update_estados(datos,guardar_datos):
                 subtema["estado"] = sum(subsubtema["estado"] for subsubtema in subtema["subsubtemas"]) / total_subsubtemas
             else:
                 subtema["estado"] = 0.0
-            print(f"Subtema estado: {subtema['estado']}")
+            #print(f"Subtema estado: {subtema['estado']}")
 
         # Update the estado of tema
         total_subtemas = len(tema["subtemas"])
@@ -33,7 +33,7 @@ def update_estados(datos,guardar_datos):
             tema["estado"] = sum(subtema["estado"] for subtema in tema["subtemas"]) / total_subtemas
         else:
             tema["estado"] = 0.0
-        print(f"Tema estado: {tema['estado']}")
+        #print(f"Tema estado: {tema['estado']}")
 
     # Save the updated data
     guardar_datos(datos)

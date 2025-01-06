@@ -53,8 +53,12 @@ class PantallaTemas(tk.Frame):
             widget.destroy()
 
         total_temas = len(self.datos["temas"])
-        if(total_temas==0):
-            return 
+        if total_temas == 0:
+            return
+
+        # Sort the 'temas' list alphanumerically by the "nombre" field
+        self.datos["temas"].sort(key=lambda tema: tema["nombre"].lower())
+
         filas = (total_temas // 4) + (1 if total_temas % 4 != 0 else 0)
 
         for index, tema in enumerate(self.datos["temas"]):
@@ -62,8 +66,8 @@ class PantallaTemas(tk.Frame):
             columna = index % 4
 
             btn_tema = tk.Button(self.frame_contenido, text=tema["nombre"], 
-                                 bg=self.calcular_color(tema["subtemas"]), 
-                                 command=lambda tema=tema: self.abrir_subtemas(tema))
+                                bg=self.calcular_color(tema["subtemas"]), 
+                                command=lambda tema=tema: self.abrir_subtemas(tema))
             btn_tema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
 
         for i in range(filas):

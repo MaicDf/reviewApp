@@ -19,6 +19,8 @@ class PantallaSubsubtemas(tk.Frame):
         self.tema=tema
         
     def crear_widgets(self):
+        self.master.title("SubsubTemas - (" + str(len(self.subtema["subsubtemas"])) + ")")
+        
         update_estados(self.datos,self.guardar_datos)
         
         self.label_titulo = tk.Label(self, text=self.subtema["nombre"], font=("Arial", 16, "bold"))
@@ -65,27 +67,34 @@ class PantallaSubsubtemas(tk.Frame):
         self.frame_contenido.bind("<Configure>", self.actualizar_scrollregion)
 
     def mostrar_subsubtemas(self):
+        
         # Clear previous widgets
         for widget in self.frame_contenido.winfo_children():
             widget.destroy()
 
-        # Define grid layout
-        if(len(self.subtema["subsubtemas"]))==0:
+        # Check if there are any subsubtemas
+        if len(self.subtema["subsubtemas"]) == 0:
             return
+
+        # Sort the 'subsubtemas' list alphanumerically by the "nombre" field
+        self.subtema["subsubtemas"].sort(key=lambda subsubtema: subsubtema["nombre"].lower())
+
+        # Define grid layout
         filas, columnas = 3, 4
         for index, subsubtema in enumerate(self.subtema["subsubtemas"]):
             fila = index // columnas
             columna = index % columnas
 
-            # Create a button for each subsubtopic
+            # Create a button for each subsubtema
             btn_subsubtema = tk.Button(
                 self.frame_contenido,
                 text=subsubtema["nombre"],
                 bg=self.calcular_color(subsubtema),
-                command=lambda subsubtema=subsubtema: self.abrir_subsubsubtemas(subsubtema))
+                command=lambda subsubtema=subsubtema: self.abrir_subsubsubtemas(subsubtema)
+            )
             
             btn_subsubtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
-            self.guardar_datos(self.datos)
+
         # Adjust row/column weights for uniform layout
         for i in range(filas):
             self.frame_contenido.grid_rowconfigure(i, weight=1)
@@ -104,13 +113,11 @@ class PantallaSubsubtemas(tk.Frame):
         deadline=datetime.strptime(subsubtema["deadline"], '%Y-%m-%d')
         delta=abs((deadline-datetime.today()).days)
         estado=0.0  
-        print(delta)
         if(delta>=30):
             estado=1.0
         else:
             estado=delta/30
         subsubtema["estado"]=estado
-        print(estado)
         proporción_rojo = 1 - estado
 
         # Interpolate between green and red using lerp_color
@@ -200,6 +207,7 @@ class PantallaSubsubtemas(tk.Frame):
 
     def actualizarVista(self):
         update_estados(self.datos,self.guardar_datos)
+
         if self.frame_contenido:
             self.mostrar_subsubtemas()
         else:

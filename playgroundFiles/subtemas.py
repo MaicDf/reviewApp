@@ -16,6 +16,8 @@ class PantallaSubtemas(tk.Frame):
         self.temas_frame.pack(fill="both", expand=True)
         
     def crear_widgets(self):
+        self.master.title("SubTemas - (" + str(len(self.tema["subtemas"])) + ")")
+        
         update_estados(self.datos,self.guardar_datos)
 
 
@@ -67,21 +69,25 @@ class PantallaSubtemas(tk.Frame):
         for widget in self.frame_contenido.winfo_children():
             widget.destroy()
 
+        # Sort the 'subtemas' list alphanumerically by the "nombre" field
+        self.tema["subtemas"].sort(key=lambda subtema: subtema["nombre"].lower())
+
         # Define grid layout
         filas, columnas = 3, 4
         for index, subtema in enumerate(self.tema["subtemas"]):
             fila = index // columnas
             columna = index % columnas
 
-            # Create a button for each subtopic
+            # Create a button for each subtema
             btn_subtema = tk.Button(
                 self.frame_contenido,
                 text=subtema["nombre"],
                 bg=self.calcular_color(subtema),
-                command=lambda subtema=subtema: self.abrir_subsubtemas(subtema))
+                command=lambda subtema=subtema: self.abrir_subsubtemas(subtema)
+            )
             
             btn_subtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
-            self.guardar_datos(self.datos)
+
         # Adjust row/column weights for uniform layout
         for i in range(filas):
             self.frame_contenido.grid_rowconfigure(i, weight=1)
@@ -100,7 +106,6 @@ class PantallaSubtemas(tk.Frame):
         
         estado = sum(float(subsubtema["estado"]) for subsubtema in subtema["subsubtemas"]) / len(subtema["subsubtemas"]) if subtema["subsubtemas"] else 0
         subtema["estado"] = estado #for updating
-        print("subtema\n",subtema)
         proporción_rojo = 1 - estado
         # Interpolate between green and red
         color = self.lerp_color((144, 238, 144), (255, 182, 193), proporción_rojo)
@@ -186,7 +191,6 @@ class PantallaSubtemas(tk.Frame):
 
     def actualizarVista(self):
         update_estados(self.datos,self.guardar_datos)
-        self.master.tittle("hola")
         if self.frame_contenido:
             self.mostrar_subtemas()
         else:
