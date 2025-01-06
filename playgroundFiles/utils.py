@@ -1,5 +1,8 @@
 from datetime import datetime
+from tkinter import font
+import tkinter as tk
 
+#update estados
 def update_estados(datos,guardar_datos):
     for tema in datos["temas"]:
         for subtema in tema["subtemas"]:
@@ -37,3 +40,50 @@ def update_estados(datos,guardar_datos):
 
     # Save the updated data
     guardar_datos(datos)
+
+
+
+    
+
+#improve text editor.
+import tkinter as tk
+from tkinter import font
+
+class RichTextEditor(tk.Text):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self.configure(undo=True, wrap="word")  # Enable undo/redo
+        self.base_font = font.Font(family="Arial", size=12)
+
+        # Create bold and italic fonts
+        self.bold_font = font.Font(family="Arial", size=12, weight="bold")
+        self.italic_font = font.Font(family="Arial", size=12, slant="italic")
+
+        # Default tags for text formatting
+        self.tag_configure("bold", font=self.bold_font)
+        self.tag_configure("italic", font=self.italic_font)
+        self.tag_configure("highlight", background="yellow")
+
+        # Bind shortcuts
+        self.bind("<Control-b>", self.toggle_bold)
+        self.bind("<Control-i>", self.toggle_italic)
+        self.bind("<Control-z>", lambda e: self.edit_undo())
+        self.bind("<Control-y>", lambda e: self.edit_redo())
+
+    def toggle_bold(self, event=None):
+        self.toggle_tag("bold")
+        return "break"
+
+    def toggle_italic(self, event=None):
+        self.toggle_tag("italic")
+        return "break"
+
+    def toggle_tag(self, tag):
+        try:
+            start, end = self.index("sel.first"), self.index("sel.last")
+            if tag in self.tag_names("sel.first"):
+                self.tag_remove(tag, start, end)
+            else:
+                self.tag_add(tag, start, end)
+        except tk.TclError:
+            pass  # No selection

@@ -10,23 +10,24 @@
                     "estado": 0.0,
                     "subsubtemas": [
                         {
-                            "nombre": "4 : DICTIONARY",
-                            "concept": "",
-                            "atomic_task": "sdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasd",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        },
-                        {
                             "nombre": "2. Kargs",
                             "concept": "",
-                            "atomic_task": "",
+                            "atomic_task": "asdsad",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "deadline": "2025-01-05",
+                            "hint": "jjj"
                         },
                         {
                             "nombre": "3.TDD ",
                             "concept": "",
                             "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "4 : DICTIONARY",
+                            "concept": "",
+                            "atomic_task": "sdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasd",
                             "estado": 0.0,
                             "deadline": "2025-01-05"
                         },

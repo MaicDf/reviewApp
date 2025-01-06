@@ -2,8 +2,43 @@
     "temas": [
         {
             "id": 0,
-            "nombre": "PYTHON",
+            "nombre": "(A) PYTHON",
             "subtemas": [
+                {
+                    "id": 1,
+                    "nombre": "Additional functionalities",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "Kargs",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "T  : DICTIONARY",
+                            "concept": "",
+                            "atomic_task": "sdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasd",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "TDD ",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        },
+                        {
+                            "nombre": "Write and Read files",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-05"
+                        }
+                    ]
+                },
                 {
                     "id": 0,
                     "nombre": "Building blocks",
@@ -66,43 +101,193 @@
                             "deadline": "2025-01-05"
                         }
                     ]
-                },
+                }
+            ],
+            "estado": 0.0
+        },
+        {
+            "id": 1,
+            "nombre": "(B) React",
+            "subtemas": [
                 {
-                    "id": 1,
-                    "nombre": "Additional functionalities",
+                    "id": 3,
+                    "nombre": "(B) React Native",
                     "estado": 0.0,
                     "subsubtemas": [
                         {
-                            "nombre": "TDD ",
+                            "nombre": "001 Concept",
                             "concept": "",
                             "atomic_task": "",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
-                        },
+                            "deadline": "2025-01-06"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "nombre": "Components",
+                    "estado": 0.0,
+                    "subsubtemas": [
                         {
-                            "nombre": "Kargs",
+                            "nombre": "children.map",
                             "concept": "",
                             "atomic_task": "",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "deadline": "2025-01-06"
                         },
                         {
-                            "nombre": "Write and Read files",
+                            "nombre": "cloneElement",
                             "concept": "",
                             "atomic_task": "",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "deadline": "2025-01-06"
                         },
                         {
-                            "nombre": "T  : DICTIONARY",
+                            "nombre": "createContext",
                             "concept": "",
-                            "atomic_task": "sdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasd",
+                            "atomic_task": "",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "Props",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        }
+                    ]
+                },
+                {
+                    "id": 0,
+                    "nombre": "Hooks",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "1.UseState",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "2.UseRef",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "3.UseReducer",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "CustomHooks",
+                            "concept": "",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "nombre": "JSX",
+                    "estado": 0.0,
+                    "subsubtemas": []
+                }
+            ],
+            "estado": 0.0
+        },
+        {
+            "id": 5,
+            "nombre": "(Z)  UX and UI design",
+            "subtemas": [
+                {
+                    "id": 2,
+                    "nombre": "FIGMA",
+                    "estado": 0.0,
+                    "subsubtemas": []
+                },
+                {
+                    "id": 1,
+                    "nombre": "UI",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "What is it?",
+                            "concept": "UI (User Interface) is a component of UX (User Experience) that focuses on the visual elements and interactive components users engage with.",
+                            "atomic_task": "",
+                            "estado": 0.03333333333333333,
+                            "deadline": "2025-01-06"
+                        }
+                    ]
+                },
+                {
+                    "id": 0,
+                    "nombre": "UX",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "000. What's the focus?",
+                            "concept": "Knowing what the customer feels when uses the app",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "001. Standards to use? [5]",
+                            "concept": "DIVIDE SATISFATORY OR INSATISFACTORY (or any range of measurement)\n1. Learnability: How easily users can accomplish tasks when using a product for the first time.\n2. Efficiency: How quickly users can perform tasks once they\u2019ve learned the system.\n3. Memorability: How easily users can reestablish proficiency after a period of not using the product.\n4. Errors: The number, severity, and recoverability of mistakes users make.\n5. Satisfaction: How pleasant and enjoyable the user experience is.",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "003. User Persona?",
+                            "concept": "A user persona is a model that represents a potential user of a website or app, helping design teams focus on end users' need -Interviews, webanalytics...etc",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "004. User Story / Scenario?",
+                            "concept": "A user story is a brief statement that describes a user, their goal, and the reason for that goal, typically following the format: \"As a (type of user), I want (a goal) for (some reason). \n\na Scenario is a Narrative descriptions of user interactions with a product in a specific context to achieve a goal.\nExample: \"Lisa uses a fitness app to track her daily steps and set goals.\"",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "005. UX process",
+                            "concept": "Five Stages of the UX Process\nA user-centered design framework:\nEmpathize (understand users)\nDefine (identify needs)\nIdeate (generate ideas)-> Keep open mind.\nPrototype (build solutions)\nTest (evaluate usability).\nExample: Designing a meal-planning app, conduct interviews (Empathize), identify pain points (Define), brainstorm features (Ideate), create mockups (Prototype), and test with users (Test).",
+                            "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "999. Prompt",
+                            "concept": "I'm doing anki cards with this lecture. Can you give me the promp and the concept (Short) for the active recall?",
+                            "atomic_task": "I'm doing anki cards with this lecture. Can you give me the promp and the concept (Short) for the active recall?",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
                         }
                     ]
                 }
             ],
+            "estado": 0.0
+        },
+        {
+            "id": 3,
+            "nombre": "4. AWS",
+            "subtemas": [],
+            "estado": 0.0
+        },
+        {
+            "id": 4,
+            "nombre": "5. DJango",
+            "subtemas": [],
             "estado": 0.0
         }
     ]

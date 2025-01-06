@@ -149,7 +149,7 @@ class PantallaSubsubtemas(tk.Frame):
         def guardar_subsubtema():
             nombre_subsubtema = entry_nombre.get()
             if nombre_subsubtema.strip():
-                nuevo_subsubtema = {"nombre": nombre_subsubtema,"concept":"","atomic_task":"", "estado": 0.0,"deadline": datetime.today().strftime('%Y-%m-%d')}
+                nuevo_subsubtema = {"nombre": nombre_subsubtema,"concept":"","atomic_task":"","hint":"", "estado": 0.0,"deadline": datetime.today().strftime('%Y-%m-%d')}
                 self.subtema["subsubtemas"].append(nuevo_subsubtema)
                 self.guardar_datos(self.datos)
                 self.mostrar_subsubtemas()

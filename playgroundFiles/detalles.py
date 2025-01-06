@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import simpledialog, messagebox
 from tkinter.scrolledtext import ScrolledText
 from datetime import timedelta, date
+from utils import RichTextEditor
 
 class PantallaDetalles(tk.Frame):
     def __init__(self, master, tema, subtema, subsubtema, datos, guardar_datos):
@@ -13,7 +14,7 @@ class PantallaDetalles(tk.Frame):
         self.tema = tema
         self.subtema = subtema
 
-        self.master.geometry("700x700")
+        self.master.geometry("700x800")  # Increased height for more space
         self.crear_widgets()
 
     def crear_widgets(self):
@@ -36,6 +37,16 @@ class PantallaDetalles(tk.Frame):
         self.atomic_task_label = tk.Label(atomic_task_frame, text="Atomic Task: " + self.subsubtema.get("atomic_task", ""))
         self.atomic_task_label.pack(side="left")
 
+        # Hint Label and Edit Icon (New Hint Field)
+        hint_frame = tk.Frame(self)
+        hint_frame.pack(anchor="w", fill="x", padx=10, pady=5)
+
+        edit_hint_button = tk.Button(hint_frame, text="🖉", command=self.editar_hint)
+        edit_hint_button.pack(side="left", padx=5)
+
+        self.hint_label = tk.Label(hint_frame, text="Hint: " + self.subsubtema.get("hint", ""))
+        self.hint_label.pack(side="left")
+
         # Concept/Active Recall Text Area and Edit Icon
         concept_frame = tk.Frame(self)
         concept_frame.pack(anchor="w", fill="x", padx=10, pady=5)
@@ -43,19 +54,17 @@ class PantallaDetalles(tk.Frame):
         edit_concept_button = tk.Button(concept_frame, text="🖉", command=self.editar_concept)
         edit_concept_button.pack(side="left", padx=5)
 
-        concept_label = tk.Label(concept_frame, text="Concept/Hint (Active Recall):")
+        concept_label = tk.Label(concept_frame, text="Concept(Active Recall):")
         concept_label.pack(side="left")
          
-        self.concept_text = ScrolledText(self, wrap=tk.WORD, height=10, state="disabled", bg="white" if self.subsubtema["concept"]=="" else "black")
+        self.concept_text = RichTextEditor(self, wrap=tk.WORD, height=15, width=80, bg="white", undo=True)  # Increased height and width
         self.concept_text.pack(fill="both", expand=True, padx=10, pady=5)
 
         # Insert concept text
         concept_content = self.subsubtema["concept"]
 
-        self.concept_text.config(state="normal")
         self.concept_text.delete("1.0", tk.END)
         self.concept_text.insert("1.0", concept_content)
-        self.concept_text.config(state="disabled")
 
         # Show Button
         self.show_button = tk.Button(self, text="Show", command=self.mostrar_concepto)
@@ -76,7 +85,7 @@ class PantallaDetalles(tk.Frame):
         delete_button = tk.Button(self, text="Delete", command=self.eliminar_subsubtema, bg="red", fg="white")
         delete_button.pack(pady=10)
 
-    def editar_subsubtema(self,tittle_label):
+    def editar_subsubtema(self, tittle_label):
         """Function to edit the name of the subsubtema"""
         ventana_editar = tk.Toplevel(self.master)
         ventana_editar.title("Editar Subsubtema")
@@ -104,6 +113,12 @@ class PantallaDetalles(tk.Frame):
         if nuevo_valor:
             self.subsubtema["atomic_task"] = nuevo_valor
             self.atomic_task_label.config(text="Atomic Task: " + nuevo_valor)
+
+    def editar_hint(self):
+        nuevo_valor = simpledialog.askstring("Edit Hint", "Enter new hint:")
+        if nuevo_valor:
+            self.subsubtema["hint"] = nuevo_valor
+            self.hint_label.config(text="Hint: " + nuevo_valor)
 
     def editar_concept(self):
         self.concept_text.config(state="normal", bg="white")
