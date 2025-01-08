@@ -1,6 +1,6 @@
 import tkinter as tk
 from datetime import datetime
-from utils import update_estados
+from utils import update_estados,assign_positions
 
 from detalles import PantallaDetalles
 
@@ -14,7 +14,7 @@ class PantallaSubsubtemas(tk.Frame):
         self.master.bind("<FocusIn>", lambda event: self.actualizarVista())        
         
         self.crear_widgets()
-        self.subsubtemas_frame = tk.Frame(self, width=450)
+        self.subsubtemas_frame = tk.Frame(self, width=700)
         self.subsubtemas_frame.pack(fill="both", expand=True)
         self.tema=tema
         
@@ -94,7 +94,8 @@ class PantallaSubsubtemas(tk.Frame):
             )
             
             btn_subsubtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
-
+        assign_positions(self.datos)
+        self.guardar_datos(self.datos)
         # Adjust row/column weights for uniform layout
         for i in range(filas):
             self.frame_contenido.grid_rowconfigure(i, weight=1)
@@ -192,9 +193,8 @@ class PantallaSubsubtemas(tk.Frame):
 
         label = tk.Label(confirmacion, text=f"¿Está seguro de eliminar el subtema '{self.subtema['nombre']}'?")
         label.pack(pady=10)
-
         def confirmar_eliminacion():
-            self.datos["temas"][self.tema['id']]["subtemas"].remove(self.subtema)
+            self.datos["temas"][self.tema['pos']]["subtemas"].remove(self.subtema)
             self.guardar_datos(self.datos)
             self.master.destroy()
             confirmacion.destroy()

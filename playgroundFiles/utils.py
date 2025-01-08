@@ -42,7 +42,24 @@ def update_estados(datos,guardar_datos):
     guardar_datos(datos)
 
 
+def assign_positions(datos):
+    # Iterate over each 'tema'
+    for tema_index, tema in enumerate(datos["temas"]):
+        # Assign position to 'tema'
+        tema["pos"] = tema_index
 
+        # Iterate over each 'subtema' in the current 'tema'
+        for subtema_index, subtema in enumerate(tema["subtemas"]):
+            # Assign position to 'subtema'
+            subtema["pos"] = subtema_index
+
+            # Iterate over each 'subsubtema' in the current 'subtema'
+            for subsubtema_index, subsubtema in enumerate(subtema["subsubtemas"]):
+                # Assign position to 'subsubtema'
+                subsubtema["pos"] = subsubtema_index
+
+    # Return the updated data structure with positions
+    return datos
     
 
 #improve text editor.

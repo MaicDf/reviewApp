@@ -1,6 +1,8 @@
 import tkinter as tk
 from subsubtemas import PantallaSubsubtemas
-from utils import update_estados
+from utils import update_estados,assign_positions
+import uuid
+
 
 class PantallaSubtemas(tk.Frame):
     def __init__(self, master, tema, datos, guardar_datos):
@@ -12,7 +14,7 @@ class PantallaSubtemas(tk.Frame):
         self.master.bind("<FocusIn>", lambda event: self.actualizarVista())        
         
         self.crear_widgets()
-        self.temas_frame = tk.Frame(self, width=450)
+        self.temas_frame = tk.Frame(self, width=700)
         self.temas_frame.pack(fill="both", expand=True)
         
     def crear_widgets(self):
@@ -51,7 +53,8 @@ class PantallaSubtemas(tk.Frame):
 
         # Display subtopics
         self.mostrar_subtemas()
-
+        #Assign positions, acording with the sorted position
+        assign_positions(self.datos)
         # Buttons for actions
         self.btn_anadir_subtema = tk.Button(self, text="Añadir Subtema", command=self.anadir_subtema)
         self.btn_anadir_subtema.pack(pady=5)
@@ -87,7 +90,8 @@ class PantallaSubtemas(tk.Frame):
             )
             
             btn_subtema.grid(row=fila, column=columna, sticky="nsew", padx=5, pady=5)
-
+        assign_positions(self.datos)
+        self.guardar_datos(self.datos)
         # Adjust row/column weights for uniform layout
         for i in range(filas):
             self.frame_contenido.grid_rowconfigure(i, weight=1)
@@ -131,7 +135,7 @@ class PantallaSubtemas(tk.Frame):
         def guardar_subtema():
             nombre_subtema = entry_nombre.get()
             if nombre_subtema.strip():
-                nuevo_subtema = {"id":len(self.tema["subtemas"]), "nombre": nombre_subtema, "estado": 0.0,"subsubtemas":[]}
+                nuevo_subtema = {"id":str(uuid.uuid4()), "nombre": nombre_subtema, "estado": 0.0,"subsubtemas":[]}
                 self.tema["subtemas"].append(nuevo_subtema)
                 self.guardar_datos(self.datos)
                 self.mostrar_subtemas()

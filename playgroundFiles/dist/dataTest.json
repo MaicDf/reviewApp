@@ -1,41 +1,86 @@
 {
     "temas": [
         {
+            "id": 5,
+            "nombre": "(A) HTML & CSS",
+            "subtemas": [
+                {
+                    "id": 1,
+                    "nombre": "Effects",
+                    "estado": 0.0,
+                    "subsubtemas": []
+                },
+                {
+                    "id": 0,
+                    "nombre": "Layout",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "Flex",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "Grid",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "mock",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-08"
+                        }
+                    ]
+                }
+            ],
+            "estado": 0.0
+        },
+        {
             "id": 0,
             "nombre": "(A) PYTHON",
             "subtemas": [
                 {
                     "id": 1,
                     "nombre": "Additional functionalities",
-                    "estado": 0.0,
+                    "estado": 0.03333333333333333,
                     "subsubtemas": [
                         {
-                            "nombre": "Kargs",
-                            "concept": "",
-                            "atomic_task": "",
-                            "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "nombre": "**kwargs & *args",
+                            "concept": "**kwargs es un mecanismo que permite a una funci\u00f3n aceptar un n\u00famero variable de argumentos con nombre (keyword arguments). Es \u00fatil cuando no sabes de antemano cu\u00e1ntos argumentos con nombre recibir\u00e1s en una funci\u00f3n.\n\ndef mostrar_informacion(**kwargs):\n    for clave, valor in kwargs.items():\n        print(f\"{clave}: {valor}\")\n\nmostrar_informacion(nombre=\"Carlos\", edad=25, ciudad=\"Bogot\u00e1\")\n---------------------------------------------------------------------------\ndef sumar_numeros(*args):\n    return sum(args)\n\nprint(sumar_numeros(1, 2, 3, 4, 5))  # Salida: 15\nprint(sumar_numeros(10, 20))         # Salida: 30",
+                            "atomic_task": "(5m) Create a function that uses *args and one that uses *kwargs",
+                            "estado": 0.13333333333333333,
+                            "deadline": "2025-01-13",
+                            "hint": "K W stands for key value, * refers to the amount"
                         },
                         {
                             "nombre": "T  : DICTIONARY",
                             "concept": "",
                             "atomic_task": "sdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasdsdasd",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "deadline": "2025-01-06"
                         },
                         {
                             "nombre": "TDD ",
                             "concept": "",
                             "atomic_task": "",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "deadline": "2025-01-06"
                         },
                         {
                             "nombre": "Write and Read files",
                             "concept": "",
                             "atomic_task": "",
                             "estado": 0.0,
-                            "deadline": "2025-01-05"
+                            "deadline": "2025-01-06"
                         }
                     ]
                 },
@@ -103,15 +148,30 @@
                     ]
                 }
             ],
-            "estado": 0.0
+            "estado": 0.016666666666666666
         },
         {
             "id": 1,
             "nombre": "(B) React",
             "subtemas": [
                 {
+                    "id": 4,
+                    "nombre": "000 Basics",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "First steps",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        }
+                    ]
+                },
+                {
                     "id": 3,
-                    "nombre": "(B) React Native",
+                    "nombre": "001 React Native",
                     "estado": 0.0,
                     "subsubtemas": [
                         {
@@ -128,6 +188,22 @@
                     "nombre": "Components",
                     "estado": 0.0,
                     "subsubtemas": [
+                        {
+                            "nombre": "001 Controlled components",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "002 Context",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
                         {
                             "nombre": "children.map",
                             "concept": "",
@@ -197,7 +273,92 @@
                     "id": 1,
                     "nombre": "JSX",
                     "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "...",
+                            "concept": "",
+                            "atomic_task": "Use it on react components",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "Children.map",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "cloneElement",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "HOC",
+                            "concept": "",
+                            "atomic_task": "Subscription sound like a cool example",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "ReactTests",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        },
+                        {
+                            "nombre": "Render props",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "Is like passing a function as a prop",
+                            "estado": 0.0,
+                            "deadline": "2025-01-07"
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "nombre": "Reac+Chakra UI",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "Card component",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-08"
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "nombre": "React+Bootstrap",
+                    "estado": 0.0,
                     "subsubtemas": []
+                },
+                {
+                    "id": 7,
+                    "nombre": "React+Formik,YUP",
+                    "estado": 0.0,
+                    "subsubtemas": [
+                        {
+                            "nombre": "sx",
+                            "concept": "",
+                            "atomic_task": "",
+                            "hint": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-08"
+                        }
+                    ]
                 }
             ],
             "estado": 0.0
@@ -221,7 +382,7 @@
                             "nombre": "What is it?",
                             "concept": "UI (User Interface) is a component of UX (User Experience) that focuses on the visual elements and interactive components users engage with.",
                             "atomic_task": "",
-                            "estado": 0.03333333333333333,
+                            "estado": 0.0,
                             "deadline": "2025-01-06"
                         }
                     ]
@@ -260,9 +421,25 @@
                             "deadline": "2025-01-06"
                         },
                         {
-                            "nombre": "005. UX process",
+                            "nombre": "005. UX process?",
                             "concept": "Five Stages of the UX Process\nA user-centered design framework:\nEmpathize (understand users)\nDefine (identify needs)\nIdeate (generate ideas)-> Keep open mind.\nPrototype (build solutions)\nTest (evaluate usability).\nExample: Designing a meal-planning app, conduct interviews (Empathize), identify pain points (Define), brainstorm features (Ideate), create mockups (Prototype), and test with users (Test).",
                             "atomic_task": "",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "006. Task : Empathy map",
+                            "concept": "(ux/ui)You are a company front end manager, so, give me task, with an fictional but (maybe common) context, for me to do a Empathy map, It shouldnt take more than 10 minutes (so make it short)",
+                            "atomic_task": "(10m) GPT prompt on concept field",
+                            "hint": "On Notion you got a template",
+                            "estado": 0.0,
+                            "deadline": "2025-01-06"
+                        },
+                        {
+                            "nombre": "007. Task : Persona",
+                            "concept": "(ux/ui)You are a company front end manager, so, give me task, with an fictional but (maybe common) context, for me to do a user Persona, It shouldnt take more than 10 minutes (so make it short)",
+                            "atomic_task": "GPT prompt on Concept field",
+                            "hint": "Template on notion notes",
                             "estado": 0.0,
                             "deadline": "2025-01-06"
                         },

@@ -1,7 +1,7 @@
 import tkinter as tk
 from subtemas import PantallaSubtemas
-from utils import update_estados
-
+from utils import update_estados,assign_positions
+import uuid
 class PantallaTemas(tk.Frame):
     def __init__(self, master, datos, guardar_datos):
         super().__init__(master)
@@ -35,7 +35,9 @@ class PantallaTemas(tk.Frame):
 
         
         self.mostrar_temas()
-
+        #assing positions in data
+     
+        
         self.btn_anadir_tema = tk.Button(self, text="Añadir Tema", command=self.anadir_tema)
         self.btn_anadir_tema.pack()
         
@@ -78,6 +80,7 @@ class PantallaTemas(tk.Frame):
         self.frame_contenido.update_idletasks()
         canvas_width = self.frame_contenido.winfo_reqwidth()
         self.canvas.config(scrollregion=self.canvas.bbox("all"), width=canvas_width)
+        assign_positions(self.datos)
         self.guardar_datos(self.datos)
 
     def anadir_tema(self):
@@ -93,7 +96,7 @@ class PantallaTemas(tk.Frame):
         def guardar_tema():
             nombre_tema = entry_nombre.get()
             if nombre_tema.strip():
-                nuevo_tema = {"id":len(self.datos["temas"]),"nombre": nombre_tema, "subtemas": []}
+                nuevo_tema = {"id":str(uuid.uuid4()),"nombre": nombre_tema, "subtemas": []}
                 self.datos["temas"].append(nuevo_tema)
                 self.guardar_datos(self.datos)
                 self.mostrar_temas()

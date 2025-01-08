@@ -166,6 +166,7 @@
   ('tkinter.constants',
    'C:\\Python312\\Lib\\tkinter\\constants.py',
    'PYMODULE'),
+  ('tkinter.font', 'C:\\Python312\\Lib\\tkinter\\font.py', 'PYMODULE'),
   ('tkinter.messagebox',
    'C:\\Python312\\Lib\\tkinter\\messagebox.py',
    'PYMODULE'),

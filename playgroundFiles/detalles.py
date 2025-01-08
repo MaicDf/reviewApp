@@ -57,7 +57,7 @@ class PantallaDetalles(tk.Frame):
         concept_label = tk.Label(concept_frame, text="Concept(Active Recall):")
         concept_label.pack(side="left")
          
-        self.concept_text = RichTextEditor(self, wrap=tk.WORD, height=15, width=80, bg="white", undo=True)  # Increased height and width
+        self.concept_text = RichTextEditor(self, wrap=tk.WORD, height=15, width=80, bg="white" if self.subsubtema["concept"]=="" else "black", undo=True)  # Increased height and width
         self.concept_text.pack(fill="both", expand=True, padx=10, pady=5)
 
         # Insert concept text
@@ -149,6 +149,6 @@ class PantallaDetalles(tk.Frame):
     def eliminar_subsubtema(self):
         confirm = messagebox.askyesno("Delete Subsubtema", "Are you sure you want to delete this subsubtema?")
         if confirm:
-            self.datos["temas"][self.tema['id']]["subtemas"][self.subtema['id']]['subsubtemas'].remove(self.subsubtema)
+            self.datos["temas"][self.tema['pos']]["subtemas"][self.subtema['pos']]['subsubtemas'].remove(self.subsubtema)
             self.guardar_datos(self.datos)
             self.master.destroy()
